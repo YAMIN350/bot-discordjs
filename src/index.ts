@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import Discord from 'discord.js'
-import { getUsersByRoles } from './services/getUsersByRoles'
-import { convertJsonToExcel, writeExcel } from './lib/excel';
+import {getUsersByRoles} from './services/getUsersByRoles'
+import {convertJsonToExcel, writeExcel} from './lib/excel';
 
 const client = new Discord.Client({
     intents: [
@@ -12,16 +12,16 @@ const client = new Discord.Client({
     ]
 });
 
-client.on("ready", async(bot) => {
+client.on("ready", async (bot) => {
     console.log("Bot online!");
     const guild = bot.guilds.cache.get(`${process.env.BOT_ID}`);
-    if(guild) {
-        const members = await getUsersByRoles(guild)
-        const data = convertJsonToExcel(members)
-        writeExcel(data)
-    } else {
+
+    if (!guild) {
         console.log('Guild is not defined !');
+        return
     }
+    const members = await getUsersByRoles(guild)
+    writeExcel(convertJsonToExcel(members))
 })
 
 
