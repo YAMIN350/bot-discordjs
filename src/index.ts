@@ -3,6 +3,8 @@ import Discord from 'discord.js'
 import type { GuildMember, Guild } from 'discord.js'
 import xlsx from 'xlsx'
 import type { WorkSheet } from 'xlsx'
+import { normalize } from './adapters/toUser'
+import { getUsersByRoles } from './services/getUsersByRoles'
 
 const client = new Discord.Client({
     intents: [
@@ -23,8 +25,8 @@ client.on("ready", async(bot) => {
     } else {
         console.log('Guild is not defined !');
     }
-
 })
+
 const convertJsonToExcel = (data: unknown[]): WorkSheet => {
     return xlsx.utils.json_to_sheet(data);
 }
@@ -36,17 +38,6 @@ const writeExcel = (worksheet: WorkSheet) => {
     xlsx.write(workbook, {bookType: 'xlsx', type: 'binary'})
     xlsx.writeFile(workbook, `${process.env.FILENAME_EXCEL}.xlsx`)
     console.log('file generated !')
-}
-
-const getUsersByRoles = async (guild: Guild) => {
-    const fetchMembers = await guild.members.fetch()
-    const members = fetchMembers?.map((member: GuildMember) => member.toJSON()).map((e: any) => {
-        return {
-            ...e,
-            roles: e.roles.toString()
-        }
-    }).filter((member: any) => member.roles.includes('955209655829815379'))
-    return members
 }
 
 client.login(process.env.TOKEN_LOGIN)
