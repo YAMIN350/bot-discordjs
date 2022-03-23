@@ -5,7 +5,7 @@ export const convertJsonToExcel = (data: unknown[]): WorkSheet => {
     return xlsx.utils.json_to_sheet(data);
 }
 
-export const writeExcel = (worksheet: WorkSheet) => {
+export const writeFileExcel = (worksheet: WorkSheet) => {
     const workbook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(workbook, worksheet, 'dataTest')
     xlsx.write(workbook, {bookType: 'xlsx', type: 'buffer'})

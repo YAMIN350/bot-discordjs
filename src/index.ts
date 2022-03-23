@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import Discord from 'discord.js'
 import {getUsersByRoles} from './services/getUsersByRoles'
-import {convertJsonToExcel, writeExcel} from './lib/excel';
+import {convertJsonToExcel, writeFileExcel} from './lib/excel';
 
 const client = new Discord.Client({
     intents: [
@@ -21,7 +21,7 @@ client.on("ready", async (bot) => {
         return
     }
     const members = await getUsersByRoles(guild)
-    writeExcel(convertJsonToExcel(members))
+    writeFileExcel(convertJsonToExcel(members))
 })
 
 
