@@ -1,9 +1,15 @@
 import type { GuildMember, Guild } from 'discord.js'
-import { toUser } from '../adapters/toUser'
-import type { DiscordMember } from '../adapters/toUser'
+import type { DiscordMember } from '../adapters/convertUser'
+import { convertUser } from '../adapters/convertUser'
 
 export const getUsersByRoles = async (guild: Guild) => {
     const fetchMembers = await guild.members.fetch()
-    const members = fetchMembers?.map((member: GuildMember) => member.toJSON()).map((e: any) => toUser(e)).filter((member: DiscordMember) => member.roles.includes('955209655829815379'))
-    return members
+    return fetchMembers?.map((member: GuildMember) => convertMemberToJson(member)).map((e: any) => convertUser(e)).filter((member: DiscordMember) => filterByRoles(member))
+}
+
+const convertMemberToJson = (member: GuildMember) => {
+    return member.toJSON()
+}
+const filterByRoles = (member: DiscordMember) => {
+    return member.roles.includes(`${process.env.ROLE_ID}`)
 }

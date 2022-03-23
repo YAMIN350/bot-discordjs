@@ -1,4 +1,4 @@
-export interface DiscordMember {
+export type DiscordMember = {
     guildId: string,
     joinedTimestamp: number,
     premiumSinceTimestamp: string,
@@ -14,7 +14,7 @@ export interface DiscordMember {
 }
 
 
-export const toUser = (e: any): DiscordMember => {
+export const convertUser = (e: any): DiscordMember => {
     return {
         ...e,
         roles: e.roles.toString()
