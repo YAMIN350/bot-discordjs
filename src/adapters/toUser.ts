@@ -14,7 +14,7 @@ export interface DiscordMember {
 }
 
 
-export const normalize = (e: any): DiscordMember => {
+export const toUser = (e: any): DiscordMember => {
     return {
         ...e,
         roles: e.roles.toString()

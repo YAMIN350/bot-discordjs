@@ -1,10 +1,7 @@
 import 'dotenv/config'
 import Discord from 'discord.js'
-import type { GuildMember, Guild } from 'discord.js'
-import xlsx from 'xlsx'
-import type { WorkSheet } from 'xlsx'
-import { normalize } from './adapters/toUser'
 import { getUsersByRoles } from './services/getUsersByRoles'
+import { convertJsonToExcel, writeExcel } from './lib/excel';
 
 const client = new Discord.Client({
     intents: [
@@ -27,17 +24,5 @@ client.on("ready", async(bot) => {
     }
 })
 
-const convertJsonToExcel = (data: unknown[]): WorkSheet => {
-    return xlsx.utils.json_to_sheet(data);
-}
-
-const writeExcel = (worksheet: WorkSheet) => {
-    const workbook = xlsx.utils.book_new();
-    xlsx.utils.book_append_sheet(workbook, worksheet, 'dataTest')
-    xlsx.write(workbook, {bookType: 'xlsx', type: 'buffer'})
-    xlsx.write(workbook, {bookType: 'xlsx', type: 'binary'})
-    xlsx.writeFile(workbook, `${process.env.FILENAME_EXCEL}.xlsx`)
-    console.log('file generated !')
-}
 
 client.login(process.env.TOKEN_LOGIN)
