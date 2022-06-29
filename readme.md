@@ -1,10 +1,13 @@
-## Permets de récupérer les utilisateurs en filtrant par rôles sur un serveur discord
+## Discord-Bot
 
 
-### Installation
+### Permets de récupérer les utilisateurs en filtrant par rôles sur un serveur discord
+
+
+#### Installation
 
 ``npm i``
 
-### Lancer le projet
+#### Lancer le projet
 
 ``npm run start``
